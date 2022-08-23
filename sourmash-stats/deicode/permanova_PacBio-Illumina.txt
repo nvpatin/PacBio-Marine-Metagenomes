@@ -1,0 +1,14 @@
+> permanova <- adonis2(PCA_dist ~ sequencing_platform, data = pca_metadata, permutations=999)
+> permanova
+Permutation test for adonis under reduced model
+Terms added sequentially (first to last)
+Permutation: free
+Number of permutations: 999
+
+adonis2(formula = PCA_dist ~ sequencing_platform, data = pca_metadata, permutations = 999)
+                    Df SumOfSqs      R2      F Pr(>F)    
+sequencing_platform  1   21.142 0.24015 11.062  0.001 ***
+Residual            35   66.896 0.75985                  
+Total               36   88.038 1.00000                  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1

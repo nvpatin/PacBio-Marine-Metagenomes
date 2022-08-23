@@ -1,0 +1,1 @@
+> anova <- aov(distance ~ same_sequencing + paired,  data = distances_metadata)> summary(anova)                 Df Sum Sq Mean Sq F value Pr(>F)    same_sequencing   1   81.7   81.74  95.954 <2e-16 ***paired            1    2.4    2.35   2.759 0.0972 .  Residuals       663  564.8    0.85                   ---Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1

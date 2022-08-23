@@ -8,6 +8,7 @@ library(RColorBrewer)
 library(Polychrome)
 library(DESeq2)
 library(ggfortify)
+library(LDM)
 
 # import ASV table (eg "table_IDs_sterivex") and ID-to-taxonomy table
 
@@ -65,3 +66,5 @@ permanova <- adonis2(asv_t ~ Sequencing, data = metadata, permutations=999, meth
 permanova <- adonis2(asv_t ~ DepthGroup, data = metadata, permutations=999, method = "euclid")
 
 permanova
+
+# LDM PERMANOVAS for paired-sample design
