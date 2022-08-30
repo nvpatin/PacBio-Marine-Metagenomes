@@ -13,9 +13,9 @@ library(grid)
 
 #### ASV table, taxonomy table, and metadata table
 asv_table_path <- here::here("GitHub", "PacBio-Marine-Metagenomes", "sourmash-stats", "sourmash_table.csv")
-tax_table_path <- here::here("GitHub", "PacBio-Marine-Metagenomes", "sourmash-stats", "sourmash_taxonomy_phyloseq.csv")
+tax_table_path <- here::here("GitHub", "PacBio-Marine-Metagenomes", "sourmash-stats", "sourmash_gtdb_mmetsp_taxonomy-domain.csv")
 metadata_path <- here::here("GitHub", "PacBio-Marine-Metagenomes", "sourmash-stats", "sourmash_metadata_phyloseq.csv")
-sourmash_phyloseq <- merge_phyloseq(otu_table(read.csv(asv_table_path, row.names = 1),taxa_are_rows = TRUE),
+sourmash_phyloseq <- merge_phyloseq(otu_table(read.csv(asv_table_path, row.names = 1), taxa_are_rows = TRUE),
                                        tax_table(as.matrix(read.csv(tax_table_path, row.names = 1))),
                                        sample_data(read.csv(metadata_path, row.names = 1)))
 
@@ -26,7 +26,7 @@ pca_metadata <- read.csv(here::here("GitHub", "PacBio-Marine-Metagenomes", "sour
 
 ## Load DEICODE distance matrix
 
-distance <- read_qza(here::here("GitHub", "PacBio-Marine-Metagenomes", "sourmash-stats", "deicode", "Lasker2019_sourmash_Illumina_PacBio_deicode-distance.qza"))
+distance <- read_qza(here::here("GitHub", "PacBio-Marine-Metagenomes", "sourmash-stats", "deicode", "Lasker2019_Illumina_PacBio_sourmash_GTDB_MMETSP_deicode-distance.qza"))
 # Extract distance matrix
 distance_matrix <- distance$data
 # convert DEICODE matrix to "dist" class object
@@ -41,7 +41,7 @@ permanova <- adonis2(PCA_dist ~ DepthGroup, data = pca_metadata, permutations=99
 
 ### Plot 16S DEICODE RPCA - pairs labeled
 
-pco <- read_qza(here::here("GitHub", "PacBio-Marine-Metagenomes", "sourmash-stats", "deicode", "Lasker2019_sourmash_Illumina_PacBio_deicode-ordination.qza"))
+pco <- read_qza(here::here("GitHub", "PacBio-Marine-Metagenomes", "sourmash-stats", "deicode", "Lasker2019_Illumina_PacBio_sourmash_GTDB_MMETSP_deicode-ordination.qza"))
 label.PC1 <- paste0("PC1 (", round(pco$data$ProportionExplained$PC1, 3)*100,"%)")
 label.PC1
 label.PC2 <- paste0("PC2 (", round(pco$data$ProportionExplained$PC2, 3)*100,"%)")
@@ -85,7 +85,7 @@ PCA_pairs_labeled <- ggplot(pca_data,aes(x=PC1,y=PC2,color=sequencing_platform,
 PCA_pairs_labeled
 
 ggsave(path = "/Users/nastassia.patin/GitHub/PacBio-Marine-Metagenomes/sourmash-stats/",
-       filename = "PacBio_Illumina_sourmash_PCA_pairs_labeled.png", PCA_pairs_labeled,width = 7,height = 5)
+       filename = "PacBio_Illumina_sourmash_GTDB-MMETSP_PCA_pairs_labeled.png", PCA_pairs_labeled,width = 7,height = 5)
 
 # Create a legend manually
 PCA_legend <- ggplot(pca_data) +
@@ -103,10 +103,8 @@ PCA_legend <- ggplot(pca_data) +
   annotate("text",label = "11-28 m", x = 0.1, y = 2.2,size = 7,adj = 4.6)+
   annotate("point", x = 0, y = 2.1, shape = 24, colour = "black", fill = "black", size = 7, stroke = 3)+ # square point
   annotate("text",label = "45-50 m", x = 0.1, y = 2.1,size = 7,adj = 4.6)+
-  theme(panel.background = element_rect(fill="white"))
-        
+  theme(panel.background = element_rect(fill="white"), 
         panel.border = element_rect(colour = "black", fill=NA, size=2),
-        
         legend.position = "none",
         plot.margin = unit(c(0,10,0,10),"cm"))
 
@@ -121,8 +119,6 @@ combined_PCA_gg <- ggpubr::ggarrange(ggpubr::ggarrange(PCA_pairs_labeled, ncol =
                                      PCA_legend, nrow = 1, ncol = 1, heights = c(7,1))
 
 combined_PCA_gg
-
-### NEED TO PUT PLOT AND LEGEND TOGETHER ### 
 
 #=============================
 # Pairwise comparisons
@@ -254,7 +250,7 @@ distance_histogram <- function(input_data, variable){
 
 ### Reformat data
 
-distance <- read_qza(here::here("GitHub", "PacBio-Marine-Metagenomes", "sourmash-stats", "deicode", "Lasker2019_sourmash_Illumina_PacBio_deicode-distance.qza"))
+distance <- read_qza(here::here("GitHub", "PacBio-Marine-Metagenomes", "sourmash-stats", "deicode", "Lasker2019_Illumina_PacBio_sourmash_GTDB_MMETSP_deicode-distance.qza"))
 distances_metadata <- distance_data_prep(metadata = pca_metadata, distance = distance)
 
 ### Create figures
