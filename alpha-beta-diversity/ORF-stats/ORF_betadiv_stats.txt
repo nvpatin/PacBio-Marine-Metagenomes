@@ -1,0 +1,45 @@
+# ORF DEICODE stats
+
+# Permanovas
+
+# permanova for sequencing platform
+> permanova <- adonis2(PCA_dist ~ sequencing_platform, data = pca_metadata, permutations=999)
+> permanova
+Permutation test for adonis under reduced model
+Terms added sequentially (first to last)
+Permutation: free
+Number of permutations: 999
+
+adonis2(formula = PCA_dist ~ sequencing_platform, data = pca_metadata, permutations = 999)
+                    Df SumOfSqs      R2      F Pr(>F)  
+sequencing_platform  2   12.952 0.12282 3.2905  0.016 *
+Residual            47   92.501 0.87718                
+Total               49  105.453 1.00000                
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+# permanova for depth group
+> permanova <- adonis2(PCA_dist ~ DepthGroup, data = pca_metadata, permutations=999)
+> permanova
+Permutation test for adonis under reduced model
+Terms added sequentially (first to last)
+Permutation: free
+Number of permutations: 999
+
+adonis2(formula = PCA_dist ~ DepthGroup, data = pca_metadata, permutations = 999)
+           Df SumOfSqs      R2     F Pr(>F)  
+DepthGroup  2   10.257 0.09726 2.532  0.035 *
+Residual   47   95.196 0.90274               
+Total      49  105.453 1.00000               
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+# ANOVA on pairwise distances
+> anova <- aov(distance ~ same_sequencing + paired,  data = distances_metadata)
+> summary(anova)
+                  Df Sum Sq Mean Sq F value   Pr(>F)    
+same_sequencing    1   74.2   74.20   72.98  < 2e-16 ***
+paired             1   24.5   24.49   24.09 1.04e-06 ***
+Residuals       1222 1242.3    1.02                     
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
